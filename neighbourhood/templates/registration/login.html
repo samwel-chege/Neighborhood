@@ -1,8 +1,9 @@
 {%extends "registration/base.html"%}
 {% load bootstrap5 %}
 {% block content %}
+<div class="box" style="color: rgb(226, 137, 21);">
 <div class="wrapper" id="content">
-<div class="container">
+<div class="container" style="background-color: rgb(3, 15, 68); width: 40rem;">
   <div class="row">
     <!-- Empty div -->
     <div class="col-md-4"></div>
@@ -22,11 +23,11 @@
             {% bootstrap_form form%}
            
             <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+              <input type="submit" class="btn btn-secondary btn-sm" value="Login">
             </div>
 
             <input type="hidden" name="next" value="{{next}}">
-              <p>Don't have an account? <a href="/accounts/register">Sign up</a></p>
+              <p>Don't have an account? <a href="/accounts/register"><span style="color: rgb(41, 98, 223);">Sign up</span></a></p>
           </form>
 
         </div>
@@ -38,12 +39,6 @@
     <div class="col-md-4"></div>
   </div>
 </div>
-<footer>
-    <div class="container">
-        <div class="copyright-notice">
-            &copy; 2021 Neighborhood
-        </div>
-    </div>
-</footer>
+</div>
 </div>
 {% endblock %}
