@@ -1,0 +1,27 @@
+footer{
+    padding: 5rem 0;
+}
+
+footer .container{
+    display: flex;
+    justify-content: space-between;
+    font-weight: lighter;
+    font-size: 1.1rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+}
+
+.footer-nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.footer-nav ul li{
+    margin-right: 1.4rem;
+}
+
+.footer-nav ul li a{
+    color: #003569;
+}
+
