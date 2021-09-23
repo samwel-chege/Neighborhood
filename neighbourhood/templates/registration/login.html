@@ -1,0 +1,49 @@
+{%extends "registration/base.html"%}
+{% load bootstrap5 %}
+{% block content %}
+<div class="wrapper" id="content">
+<div class="container">
+  <div class="row">
+    <!-- Empty div -->
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      {% if form.errors %}
+        <p> Password or Username is incorrect </p>
+      {% endif %}
+      <div class="panel panel-default">
+        <div class="logo">
+          <img src="static/logos/awwwards-website-logo-pngrepo-com.png" alt="" width="103">
+      </div>
+        
+        <div class="panel-body">
+
+          <form  action="/accounts/login/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form%}
+           
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+            </div>
+
+            <input type="hidden" name="next" value="{{next}}">
+              <p>Don't have an account? <a href="/accounts/register">Sign up</a></p>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- empty div -->
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="copyright-notice">
+            &copy; 2021 Neighborhood
+        </div>
+    </div>
+</footer>
+</div>
+{% endblock %}
