@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+{{block.super}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +12,22 @@
 </head>
 <body>
     <div class="container">
-        <h3> <em>Neighborhood</em> </h3>
+    <h3> <em>Neighborhood</em> </h3>
     </div>
+    <hr>
+    <div class="footer">
+    <footer>   
+     <div class="container">
+       <nav class="footer-nav">
+         <form  action="{% url 'home'%}" method="post">
+          {%csrf_token%}
+          {% bootstrap_form letterForm layout='inline' %}
+          <input type="submit" value="Subscribe" style="color: coral; margin-top: 1%;">
+         </form>
+       </nav>
+     </div>
+   </footer>
+  </div>
 </body>
 </html>
+{%endblock%}
