@@ -1,7 +1,12 @@
-footer{
-    padding: 5rem 0;
+.navbar-brand{
+    color: chocolate;
 }
-
+/* footer{
+    padding: 5rem 0;
+} */
+.footer{
+    color: cornflowerblue;
+}
 footer .container{
     display: flex;
     justify-content: space-between;
@@ -9,6 +14,7 @@ footer .container{
     font-size: 1.1rem;
     margin-top: 0;
     flex-wrap: wrap;
+   
 }
 
 .footer-nav ul{
@@ -17,11 +23,11 @@ footer .container{
     list-style: none;
 }
 
-.footer-nav ul li{
+/* .footer-nav ul li{
     margin-right: 1.4rem;
 }
 
 .footer-nav ul li a{
     color: #003569;
 }
-
+ */
