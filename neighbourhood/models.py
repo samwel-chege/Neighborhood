@@ -32,13 +32,13 @@ class Neighborhood(models.Model):
         return cls.objects.filter(name__icontains = search_term)
 
     @classmethod
-    def update_neighborhood(cls,id,residents):
-        return cls.objects.filter(id=id,residents=residents)    
+    def update_neighbors(cls,id,resident):
+        return cls.objects.filter(id=id,residents=resident)    
 
     def __str__(self):
         return self.name
 
-class Residents(models.Model):
+class Resident(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     profile_photo = models.ImageField(upload_to='photos')
