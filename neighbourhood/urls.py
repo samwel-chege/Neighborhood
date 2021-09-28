@@ -13,7 +13,7 @@ urlpatterns = [
     path('update-hood/',views.update_hood,name='update-hood'),
     path('all-residents/',views.all_residents,name='all-residents'),
     path('business/',views.business,name='business'),
-    path(r'^posts/(\d+)',views.post,name='post'),
+    path('posts/',views.post,name='post'),
 
 
 ]
