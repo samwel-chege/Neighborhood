@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <a href="{% url 'business' %}" class="btn btn-sm btn-info mb-2"> New Hood</a>
+    <div class="row">
+        {% for businez in business %}
+        <div class="col-md-4">
+            <div class="card mb-4" style="min-height:340px">
+                <img src="{{ businez.photo.url}}" class="card-img-top" alt="{{ business.name }}"> 
+                <div class="card-body">
+                    <h5 class="card-title">{{businez.name}}</h5>
+                        <p>{{businesses.user}}</p>
+                    <p class="card-text">{{hood.description}}</p>
+                    <p>{{businez.email_address}}</p>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock%}
