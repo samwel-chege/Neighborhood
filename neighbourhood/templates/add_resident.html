@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load bootstrap5 %}
+{% load static %}
+{% block styles %}
+{{ block.super}}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+{% block content %}
+{{block.super}}
+
+<div class="container">
+    <h1>Add Resident</h1>
+    <form action="{%url 'add-resident'%}" method="post">
+        {%csrf_token%}
+
+        {% bootstrap_form form%}
+        <input type="submit" class="btn btn-info" value="Add">
+    </form>
+
+</div>
+
+{% endblock %}
