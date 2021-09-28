@@ -170,8 +170,8 @@ def business(request):
     business = Business.objects.all()
     return render(request, 'business.html',{"business":business})    
 
-def post(request,hood_id):
-    posts= Neighborhood.objects.get(id=hood_id)
+def post(request):
+    posts= Neighborhood.objects.all()
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
