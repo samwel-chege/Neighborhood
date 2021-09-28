@@ -83,6 +83,7 @@ class Post(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     post = models.TextField()
+    photo = models.ImageField(upload_to='photos',default='no photo')
     neighbourhood = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
 
