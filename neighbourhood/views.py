@@ -13,6 +13,7 @@ import string
 # Create your views here.
 @login_required(login_url='/accounts/login/') 
 def home(request):
+    post = Post.objects.all()
     if request.method =='POST':
         form = NewsLetterForm(request.POST)
         if form.is_valid():
@@ -26,7 +27,7 @@ def home(request):
 
     else:
         form = NewsLetterForm()
-    return render(request,'index.html', {'letterForm':form})
+    return render(request,'index.html', {'letterForm':form,'post':post})
 
 def newsletter(request):
     name = request.POST.get('your_name')
@@ -179,7 +180,7 @@ def post(request):
             post.hood = posts
             post.user = request.user
             post.save()
-            return redirect('/', posts.id)
+            return redirect('/', post.id)
     else:
         form = PostForm()    
 
