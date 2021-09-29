@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
+{% load static%}
 {% block content %}
 {{block.super}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,14 +14,54 @@
 </head>
 <body>
   
-    <div class="container-fluid"  style="background-image: url(static/images/george-pagan-iii-dlM92cbSh_4-unsplash.jpg); height: 100vh; background-size: cover; background-position: center;">
-    <h3> <em>Thee_Hood</em> </h3>
-    <a href="/all-residents/" style="color: chocolate;">View the residents list</a>
-    <a href="/create-admin" style="color: chocolate;">create an admin profile</a>
-    <a href="/add-resident/" style="color: chocolate;">add-resident</a>
-    <h2>something else here </h2>
-    </div>
-    <hr>
+    <section>
+      <div class="container-fluid"  style="background-image: url(static/images/george-pagan-iii-dlM92cbSh_4-unsplash.jpg); height: 50vh; background-size: cover; background-position: center; background-attachment: fixed;">
+    
+        <a href="/all-residents/" style="color: chocolate;">View the residents list</a>
+        <a href="/create-admin" style="color: chocolate;">create an admin profile</a>
+        <a href="/add-resident/" style="color: chocolate;">add-resident</a>
+      </div>
+    </section>
+    
+    <section class="posts">
+      <div class="row">
+        <div class="col md-12">
+          <div class="navigation">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" class="links">Home</a></li>
+                <li class="breadcrumb-item"><a href="/all-residents/" class="links">View Residents list</a></li>
+                <li class="breadcrumb-item"><a href="#" class="links">Admin login</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Resident's posts</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        
+        <div class="row">
+          {% for posts in post %}
+          <div class="col-md-6">
+           <div class="card">
+             <div class="card-header d-flex"></div>
+             <img src="{{ posts.photo.url}}" class="img-responsive" alt=""> 
+             <div class="card-body">
+               <div class="text-muted">{{posts.post_date | timesince }} ago</div>
+                 <div class="card_article">
+                   <article class="card_article">
+                     <h3>{{posts.title}}</h3>
+                     <p>{{posts.post}}</p>
+                   </article>
+                   </div>
+             </div>
+         </div>
+        </div>
+       {% endfor %}
+      </div>
+      </div>
+    </section>
+
     <div class="footer" style="margin-bottom: 2%;">
     <footer>   
      <div class="container">
@@ -33,6 +75,7 @@
      </div>
    </footer>
   </div>
+
   </body>
 </html>
 {%endblock%}
