@@ -2,16 +2,27 @@ import neighbourhood
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 # Create your models here.
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
 
-class Admin(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100,default="Names")
     profile_photo = models.ImageField(upload_to='photos')
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
     def __str__(self):
         return self.user.username    
@@ -20,22 +31,22 @@ class Neighborhood(models.Model):
     name  = models.CharField(max_length=100) 
     location = models.CharField(max_length=100)  
     residents = models.IntegerField(default=1)
-    admin = models.ForeignKey(Admin,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
     
 
-    # def save_neighborhood(self):
-    #     self.save()
+    def save_neighborhood(self):
+        self.save()
 
-    # def delete_neighborhood(self):
-    #     self.delete()
+    def delete_neighborhood(self):
+        self.delete()
 
-    # @classmethod
-    # def search_neighbors(cls,search_term):
-    #     return cls.objects.filter(name__icontains = search_term)
+    @classmethod
+    def search_neighbors(cls,search_term):
+        return cls.objects.filter(name__icontains = search_term)
 
-    # @classmethod
-    # def update_neighbors(cls,id,resident):
-    #     return cls.objects.filter(id=id,residents=resident)    
+    @classmethod
+    def update_neighbors(cls,id,resident):
+        return cls.objects.filter(id=id,residents=resident)    
 
     def __str__(self):
         return self.name
