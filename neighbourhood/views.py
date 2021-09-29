@@ -1,7 +1,7 @@
 import neighbourhood
 from django.shortcuts import redirect, render,get_object_or_404
 from .email import send_welcome_email
-from .models import Admin, Business, Neighborhood, NewsLetterRecipients, Post, Resident,User
+from .models import Profile, Business, Neighborhood, NewsLetterRecipients, Post, Resident,User
 from .forms import NewsLetterForm
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.http import JsonResponse
@@ -29,6 +29,7 @@ def home(request):
         form = NewsLetterForm()
     return render(request,'index.html', {'letterForm':form,'post':post})
 
+@login_required(login_url='/accounts/login/') 
 def newsletter(request):
     name = request.POST.get('your_name')
     email = request.POST.get('email')
@@ -39,6 +40,7 @@ def newsletter(request):
     data = {'sucess':'You have been successfully added to mailing list'}
     return JsonResponse(data)  
 
+@login_required(login_url='/accounts/login/') 
 def create_admin(request):
     current_user = request.user
     if request.method == 'POST':
@@ -52,16 +54,36 @@ def create_admin(request):
         form = AdminProfileForm()
     return render(request,'create_admin.html',{"form":form}) 
 
-def create_hood(request):
+@login_required(login_url='/accounts/login/') 
+def profile(request):
     current_user = request.user
     try:
-        admin = get_object_or_404(Admin,id=id)
-    except Admin.DoesNotExist:
+        profile = Profile.objects.get(user=current_user)
+    except Neighborhood.DoesNotExist:
         raise Http404()
 
     my_hood = None
     try:
-        my_hood = get_object_or_404(Neighborhood,id=id)
+        my_hood = Neighborhood.objects.get(profile=profile)
+    except Neighborhood.DoesNotExist:
+        raise Http404()
+
+    business = Business.objects.filter(neighborhood=my_hood)   
+    posts = Post.objects.filter(neighbourhood=my_hood)
+
+    return render(request,'profile.html',{"profile":profile,"business":business,"posts":posts,"hood":my_hood})              
+
+@login_required(login_url='/accounts/login/') 
+def create_hood(request):
+    current_user = request.user
+    try:
+        admin = Profile.objects.get(user = current_user)
+    except Profile.DoesNotExist:
+        raise Http404()
+
+    my_hood = None
+    try:
+        my_hood = Neighborhood.objects.get(admin=admin)
     except Neighborhood.DoesNotExist:
         pass
 
@@ -79,14 +101,14 @@ def create_hood(request):
     return render(request,'create_hood.html',{"form":form})                    
     
 @login_required(login_url='/accounts/login/') 
-def add_resident(request,neighborhood_id):
+def add_resident(request):
     current_user = request.user
     try:
-        admin = get_object_or_404(Admin,id=neighborhood_id)
-    except Neighborhood.DoesNotExist:
+        profile = Profile.objects.get(user =current_user)
+    except Profile.DoesNotExist:
         raise Http404()
     try:
-        my_hood = get_object_or_404(Neighborhood,id=neighborhood_id)
+        my_hood = Neighborhood.objects.get(profile=profile)
     except Neighborhood.DoesNotExist:
         raise Http404()        
 
@@ -114,11 +136,11 @@ def add_resident(request,neighborhood_id):
 def update_hood(request):
     current_user = request.user
     try:
-        admin = Admin.objects.get(user=current_user)
-    except Admin.DoesNotExist:
+        profile = Profile.objects.get(user=current_user)
+    except Profile.DoesNotExist:
         raise Http404()
     try:
-        my_hood = Neighborhood.objects.get(admin=admin)
+        my_hood = Neighborhood.objects.get(profile=profile)
     except Neighborhood.DoesNotExist:
         pass
 
@@ -138,15 +160,15 @@ def update_hood(request):
 def delete_hood(request):
     current_user = request.user
     try:
-        admin = Admin.objects.get(user=current_user)
+        profile = Profile.objects.get(user=current_user)
     except Neighborhood.DoesNotExist:
         raise Http404()
 
     try:
-        my_hood = Neighborhood.objects.get(admin=admin)
+        my_hood = Neighborhood.objects.get(profile=profile)
     except Neighborhood.DoesNotExist:
         pass
-    admin.delete()
+    profile.delete()
     current_user.delete()
 
     return redirect(home)    
@@ -154,15 +176,15 @@ def delete_hood(request):
 def all_residents(request):
     current_user  =request.user
     try:
-        admin = Admin.objects.all()
-    except Admin.DoesNotExist:
+        profile = Profile.objects.filter(user=current_user)
+    except Profile.DoesNotExist:
         raise Http404()
     try:
-        my_hood = Neighborhood.objects.all()
+        my_hood = Neighborhood.objects.get(profile=profile).first()
     except Neighborhood.DoesNotExist:
         raise Http404()        
 
-    residents = Resident.objects.all()
+    residents = Resident.objects.filter(neighbourhood=my_hood)
 
     return render(request,'all_residents.html',{"residents":residents,"hood":my_hood})                                  
 
@@ -171,18 +193,34 @@ def business(request):
     business = Business.objects.all()
     return render(request, 'business.html',{"business":business})    
 
-def post(request):
-    posts= Neighborhood.objects.all()
+def post(request,hood_id):
+    hood= Neighborhood.objects.get(id=hood_id)
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.hood = posts
+            post.hood = hood
             post.user = request.user
             post.save()
-            return redirect('/', post.id)
+            return redirect('/', hood.id)
     else:
         form = PostForm()    
 
     return render(request,'post.html',{'form':form})    
+
+
+def search_business(request):
+    if 'business' in request.GET and request.GET["business"]:
+        search_term = request.GET.get("business")
+        print(search_term)  
+        business = Business.search_business(search_term)
+        print(business)
+        message = f"{search_term}"
+        
+
+        return render(request,'search.html',{"message":message,"business":business})
+
+    else:
+        message = "You have not searched for any business"
+        return render(request,'search.html',{"message":message})      
 
