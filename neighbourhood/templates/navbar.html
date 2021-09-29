@@ -15,7 +15,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
               {% if user.is_authenticated%}
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="/profile/">Profile</a></li>
               <li><a class="dropdown-item" href="/logout">Logout</a></li>
               {%else%}
               <li><a class="dropdown-item" href="/accounts/login/">Login</a></li>
