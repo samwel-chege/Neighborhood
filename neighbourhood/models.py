@@ -10,7 +10,7 @@ class NewsLetterRecipients(models.Model):
 
 class Admin(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,default="Names")
     profile_photo = models.ImageField(upload_to='photos')
 
     def __str__(self):
