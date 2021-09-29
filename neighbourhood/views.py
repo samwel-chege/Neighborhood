@@ -77,13 +77,13 @@ def profile(request):
 def create_hood(request):
     current_user = request.user
     try:
-        admin = Profile.objects.get(user = current_user)
+        porfile = Profile.objects.get(user = current_user)
     except Profile.DoesNotExist:
         raise Http404()
 
     my_hood = None
     try:
-        my_hood = Neighborhood.objects.get(admin=admin)
+        my_hood = Neighborhood.objects.get(profile=profile)
     except Neighborhood.DoesNotExist:
         pass
 
@@ -93,7 +93,7 @@ def create_hood(request):
         form = NeighborhoodForm(request.POST)
         if form.is_valid():
             hood = form.save(commit=False)
-            hood.admin = admin
+            hood.profile = profile
             hood.save()
         return redirect(add_resident)
     else:
@@ -176,11 +176,11 @@ def delete_hood(request):
 def all_residents(request):
     current_user  =request.user
     try:
-        profile = Profile.objects.filter(user=current_user)
+        profile = Profile.objects.get(user=current_user)
     except Profile.DoesNotExist:
         raise Http404()
     try:
-        my_hood = Neighborhood.objects.get(profile=profile).first()
+        my_hood = Neighborhood.objects.get(profile=profile)
     except Neighborhood.DoesNotExist:
         raise Http404()        
 
