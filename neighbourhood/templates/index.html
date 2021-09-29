@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
-{% load static%}
+{% load static %}
+{% block styles %}
+{{ block.super}}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
 {% block content %}
 {{block.super}}
 
