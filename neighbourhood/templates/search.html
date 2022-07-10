@@ -7,8 +7,8 @@
 <div class="container">
     <br>
     <div class="row">
-        <div class="col-8">
-            <h1>Search results : <em>{{message}}</em> </h1>    
+        <div class="flex justify-center">
+            <h1><a class="text-2xl font-bold">Search results :</a> <em class="text-xl text-rose-500">Business not found!</em> </h1>    
             <hr>        
         </div>
         
@@ -37,7 +37,14 @@
             {% endfor %}
                                     
             {% else %}
-            <h5>{{message}} </h5>  
+            <div class="mt-4 flex justify-center">
+                <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+                
+                    <h2 class="mt-2 text-gray-600 font-semibold">{{message}}</h2>
+                
+                </div>
+            </div>
+   
             {% endif %} 
         {% endif %}         
     </div>

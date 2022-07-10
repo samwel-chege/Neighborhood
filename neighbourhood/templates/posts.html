@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{{ block.super }}
+
+
+
+{% for posts in post %}
+<!-- <div class="container mb-4 mx-auto mt-4 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+ 
+    <a href="#">
+        <img class="rounded-t-lg" src="{{ posts.photo.url}}" alt="">
+      
+    </a>
+       
+    <div class="px-4">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{posts.title}}</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{posts.post_date  }} ago</p>
+        <p>{{posts.post}}</p>
+      
+    </div>
+
+</div> -->
+<section class="max-w-2xl mx-auto pt-12 pb-6 px-4 sm:pt-16 sm:pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
+<div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+    <a href="#" class="group">
+        <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+            <img src="{{ posts.photo.url }}" alt="" class="w-full h-full object-center">
+        </div>
+        <h3 class="mt-4 mb-2 text-2xl font-bold tracking-tight text-indigo-500 dark:text-white">
+            {{ posts.title }}
+        </h3>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{posts.post_date | timesince }} ago</p>
+        <p class="text-sm font-normal">{{posts.post}}</p>
+    </a>
+</div>
+</section>
+
+{% endfor %}
+
+
+    
+{% endblock%}

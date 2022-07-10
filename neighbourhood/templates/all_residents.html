@@ -4,49 +4,58 @@
 {{ block.super}}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
+
 {% block content %}
 {{block.super}}
 
-<div class="container text-center">
-    <div class="row">
-        <h1>Residents list | {{hood.name}}</h1>
-        {% for occupant in residents %}
-        <div class="col-md-4 text-left">
-            <div class="card list-card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            {% if occupant.profile_photo %}
-                            <img class="img-thumbnail" src="{{occupant.profile_photo.url}}" alt="{{occupant.username}}">
-                            {% else %}
-                            <object
-                                data="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                type="image/png">
+
+<div class="bg-white">
+    <div class="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24">
+        <div class="space-y-8 sm:space-y-12">
+            <div class="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
+                <h2 class="text-3xl tracking-tight sm:text-4xl"><a class="text-rose-500 font-bold">Residents</a> | <a class="text-orange-500 font-bold">{{hood.name}}</a></h2>
+                <p class="text-xl text-gray-500">Here are your neighbours :)</p>
+            </div>
+            {% for occupant in residents %}
+            <ul role="list"
+                class="flex justify-center mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6">
+                <li>
+                    <div class="space-y-4">
+                        {% if occupant.profile_photo %}
+                        <img class="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
+                            src="{{occupant.profile_photo.url}}"
+                            alt="{{occupant.username}}">
+                        {% else %}
+                            <object data="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" type="image/png">
                                 <img class="img-thumbnail" src="..." alt="{{occupant.username}}">
                             </object>
-                            {% endif %}
-                        </div>
-                        <div class="col-sm-12">
-                            <h5>{{occupant.name | title}}</h5>
-                            {% if occupant.user.email %}
-                            <p><span class="fa fa-envelope"></span> {{occupant.user.email}}</p>
-                            {% endif %}
-                            <p class="text-danger"><a href="/delete-occupant/{{occupant.id}}"><i class="fas fa-trash-alt"></i>&nbsp;Remove resident</a></p>
+                        {% endif %}
+                        <div class="space-y-2">
+                            <div class="text-xs font-medium lg:text-sm">
+                                <h3 class="text-indigo-600">{{occupant.name | title}}</h3>
+                                <p class="text-indigo-600">{{title}}</p>
+                                <p class="text-rose-500"><a href="/delete-occupant/{{occupant.id}}"><i class="fas fa-trash-alt"></i>&nbsp;Remove resident</a></p>
+                            </div>
                         </div>
                     </div>
+                </li>
+
+                <!-- More people... -->
+            </ul>
+            {% empty %}
+            <div class="mt-4 flex justify-center">
+                <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+                    
+                        <h2 class="mt-2 text-xl text-gray-600 font-semibold"><a class="text-rose-500">Ooops!</a>  You haven't added any residents.</h2>
+                    
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <p>You haven't added any residents yet.</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </div>
+  
+
+
 
 {% endblock %}
