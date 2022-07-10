@@ -11,7 +11,7 @@ import random
 import string
 
 # Create your views here.
-@login_required(login_url='/accounts/login/') 
+# @login_required(login_url='/accounts/login/') 
 def home(request):
     post = Post.objects.all()
     if request.method =='POST':
@@ -28,6 +28,11 @@ def home(request):
     else:
         form = NewsLetterForm()
     return render(request,'index.html', {'letterForm':form,'post':post})
+
+#posts
+def posts(request):
+    post = Post.objects.all()
+    return render(request, 'posts.html', {'post':post})
 
 @login_required(login_url='/accounts/login/') 
 def newsletter(request):
@@ -221,6 +226,6 @@ def search_business(request):
         return render(request,'search.html',{"message":message,"business":business})
 
     else:
-        message = "You have not searched for any business"
+        message = "You have not searched for any business or try another keyword"
         return render(request,'search.html',{"message":message})      
 

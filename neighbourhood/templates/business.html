@@ -1,23 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-    <div class="row">
-        {% for businez in business %}
-        <div class="col-md-4">
-            <div class="card mb-4" style="min-height:340px">
-                <img src="{{ businez.photo.url}}" class="card-img-top" alt="{{ businez.name }}"> 
-                <div class="card-body">
-                    <h5 class="card-title">{{businez.name}}</h5>
-                        <p>Owner:{{businez.user}}</p>
-                    <p class="card-text">{{hood.description}}</p>
-                    <p>Email: {{businez.email_address}}</p>
-                    
+
+
+<div class="bg-white ">
+    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 class="text-2xl font-bold tracking-tight text-rose-500">Businesses around you </h2>
+      {% for businez in business %}
+      <div class=" mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div class="group relative">
+          <div class="shadow-md rounded-3xl w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+            <img src="{{ businez.photo.url}}" alt="{{ businez.name }}" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+          </div>
+          <div class="mt-4 flex justify-between">
+            <div>
+              <h3 class="text-sm text-gray-700">
+                <a href="#">
+                  <span aria-hidden="true" class="absolute inset-0"></span>
+                  <a class="text font-bold text-indigo-600">{{businez.name}}</a>
+                </a>
+              </h3>
+              <p class="mt-1 text-sm font-medium text-gray-500">Owner <a class="text-orange-500">{{businez.user}}</a></p>
+              <p class="text-sm font-medium text-gray-900">{{businez.email_address}}</p>
+            </div>
+            
+          </div>
+        </div>
+  
+        <!-- More products... -->
+      </div>
+      {% empty %}
+      <div class="mt-4 flex justify-center">
+          <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+                  <h2 class="mt-2 text-gray-600 text-xl font-semibold"><a class="text-rose-500">Ooops!</a> <a class="">No businesses have been added yet.</a></h2>
+          </div>
+      </div>
+      {% endfor%}
+    </div>
+  </div>
+
+  <!-- component -->
+            <!-- {% for businez in business %}
+            <div class="min-h-screen bg-gray-100 flex flex-col justify-center">
+                
+                <div class="relative m-3 flex flex-wrap mx-auto justify-center">
+            
+                <div class="relative max-w-sm min-w-[340px] bg-white shadow-md rounded-3xl p-2 mx-1 my-3 cursor-pointer">
+                    <div class="overflow-x-hidden rounded-2xl relative">
+                    <img class="h-40 rounded-2xl w-full object-cover" src="{{ businez.photo.url}}">
+                    <p class="absolute right-2 top-2 bg-white rounded-full p-2 cursor-pointer group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:opacity-50 opacity-70" fill="none" viewBox="0 0 24 24" stroke="black">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </p>
+                    </div>
+                    <div class="mt-4 pl-2 mb-2 flex justify-between ">
+                    <div>
+                        <p class="text-lg font-semibold text-gray-900 mb-0">Product Name</p>
+                        <p class="text-md text-gray-800 mt-0">$340</p>
+                    </div>
+                    <div class="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:opacity-70" fill="none" viewBox="0 0 24 24" stroke="gray">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    </div>
+                </div>
+
+              
+            
+                
+            
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% empty %}
+            <div class="mt-4 flex justify-center">
+                <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+                        <h2 class="mt-2 text-gray-600 text-xl font-semibold"><a class="text-rose-500">Ooops!</a> <a class="">No businesses have been added yet.</a></h2>
+                </div>
+            </div>
 
-    </div>
+    {% endfor %}         -->
+  
 
-</div>
 {% endblock%}

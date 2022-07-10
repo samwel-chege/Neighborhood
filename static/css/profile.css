@@ -2,9 +2,9 @@
     margin-bottom: 3%;
     background-color: #DCE1E3;
 }
-.navbar .container-fluid{
+/* .navbar .container-fluid{
     margin-bottom: 0;
-}
+} */
 .top ,.card, .posts{
     display: flex;
     flex-direction: row;

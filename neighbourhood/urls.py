@@ -14,7 +14,8 @@ urlpatterns = [
     path('update-hood/',views.update_hood,name='update-hood'),
     path('all-residents/',views.all_residents,name='all-residents'),
     path('business/',views.business,name='business'),
-    path('posts/',views.post,name='post'),
+    path('posts/',views.posts,name='posts'),
+    path('post/',views.post,name='post'),
     path(r'^search/', views.search_business, name='search_business')
 
 
